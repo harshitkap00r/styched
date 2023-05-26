@@ -28,7 +28,7 @@ function Order() {
                     })
                 }
             })
-    }, [])
+    }, [tailorUsername])
 
     useEffect(() => {
         // Fetch all order data
@@ -53,7 +53,7 @@ function Order() {
                     if (res.data.code === 1) {
                         window.alert(res.data.msg);
                     } else {
-                        window.location.reload();
+                        window.location.href = '/' + tailorUsername + '/info';
                     }
                 })
         }
@@ -72,9 +72,10 @@ function Order() {
     }
 
     return (
-        <div className='Orders' style={{ textAlign: 'center' }}>
-            <button className='tailor-info-button' onClick={() => goToInfo()}>Click here for User Details</button>
-            <div className='order-title'>All Open Orders</div>
+        <div className='Orders' style={{textAlign:'center'}}>
+            <button className='tailor-info-button' onClick={() => goToInfo()}>My Jobs >></button>
+            <div className='order-title'>Current Open Orders</div>
+
             <div className='orders'>
                 <button className='forw-prev-btn' onClick={() => setPage(oldPage => Math.max(0, oldPage - 1))}>Previous</button>
                 <table>
@@ -85,6 +86,37 @@ function Order() {
                             setPage(Math.floor(Math.random() * (totalPage + 1)));
                         }
                         return (
+
+                            // <>{
+                            //     skuUnits.map((skuUnit, index) => {
+                            //         return (
+                            //             <div className='order' key={i + index + '0'} onClick={() => orderTakingHandler(order)}>
+                            //                 <table>
+                            //                     <tr style={{color:'white',fontSize:20,lineHeight:3}}>
+                            //                         <td style={{background:'blue'}}>
+                            //                 <h3>Commission ₹{Math.floor(skuUnit.price/30)*5}</h3>ACCEPT
+                            //                         </td>
+                            //                     </tr>
+                            //                 </table>
+                            //                 <h3>#{i} :: {order._id.substring(16).toUpperCase()} ::  {skuUnits.length} </h3>
+                            //                 <img src={`https://picsum.photos/id/${skuUnit.name.substring(4)%1084}/360/540`} /><br/>
+                            //             {/* <td className='order-skuUnit'> */}
+                            //                 <b className='order-skuUnit-name' >{skuUnit.name} ({skuUnit.size})</b> <br/>
+                            //                 {/* <i className='order-skuUnit-price' >Price: ₹{skuUnit.price}</i> */}
+                            //                 {order.createdAt && <p className='order-skuUnits-'>ordered on {order.createdAt.substring(0,10)} {order.createdAt.substring(11,16)}</p>}
+
+                            //             {/* </td> */}
+                            //             <table>
+                            //                     <tr style={{color:'white',fontSize:20,lineHeight:3}}>
+                            //                         <td style={{background:'salmon'}}>REJECT</td>
+                            //                     </tr>
+                            //                 </table>
+                            //             </div>
+                            //         )
+                            //     })
+                            // }</>
+
+
                             <>
                                 <div className='order' key={i + 1 + '0'} onClick={() => orderTakingHandler(order)}>
                                     <table>
@@ -96,7 +128,7 @@ function Order() {
                                     <button className='sku-detail' onClick={(event)=>getSkuData(event, skuUnit.name)}>Get SKU details</button>
                                     <h1 rowspan={skuUnits.length}>Commission ₹{Math.floor(skuUnit.price / 30) * 5}</h1>
                                     <h3 rowspan={skuUnits.length}>{i} :: {order._id.substring(16).toUpperCase()} ::  {skuUnits.length} </h3>
-                                    <img src={`https://picsum.photos/id/${i % 1084}/360/540`} /><br />
+                                    <img src={`https://picsum.photos/id/${i % 1084}/360/540`} alt="" /><br />
                                     <td className='order-skuUnit'>
                                         <b className='order-skuUnit-name' >{skuUnit.name} ({skuUnit.size})</b> <br />
                                         <i className='order-skuUnit-price' >Price: ₹{skuUnit.price}</i>
@@ -104,6 +136,7 @@ function Order() {
                                     </td>
                                 </div>
                             </>
+
                         )
                     })}
                 </table>
